@@ -1,4 +1,4 @@
-package com.schoolemployeeapi.entitys;
+package com.schoolemployeeapi.entity;
 
 import jakarta.persistence.*;
 
