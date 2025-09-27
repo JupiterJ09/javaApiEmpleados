@@ -14,32 +14,30 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> getEmployeeById(Long id){
+    public Optional<Employee> getEmployeeById(Long id) {
 
         return employeeRepository.findById(id);
     }
 
-    public Employee saveEmployee(Employee empleado){
+    public Employee saveEmployee(Employee empleado) {
         return employeeRepository.save(empleado);
-        //System.out.println("Empleado registrado con exito");
+        // System.out.println("Empleado registrado con exito");
     }
 
+    public void deleteEmployee(Long id) {
 
-    public void deleteEmployee(Long id){
-
-        if(employeeRepository.existsById(id)){
+        if (employeeRepository.existsById(id)) {
 
             employeeRepository.deleteById(id);
-        }
-        else{
+        } else {
             throw new ResourceNotFoundException("No se encontró al empleado con ID: " + id);
         }
-        
 
     }
-    
+
+
 }

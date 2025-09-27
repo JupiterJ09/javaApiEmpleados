@@ -2,7 +2,6 @@ package com.schoolemployeeapi.controller;
 
 import com.schoolemployeeapi.entity.*;
 import com.schoolemployeeapi.exception.ResourceNotFoundException;
-import com.schoolemployeeapi.repository.EmployeeRepository;
 import com.schoolemployeeapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,35 +33,34 @@ public class EmployeeController {
 
     }
 
-    // Crear un nuevo empleado (endpoint POST)
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         Employee createdEmployee = employeeService.saveEmployee(employee);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
-    // Actualizar un empleado existente (endpoint PUT)
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
-        Employee existingEmployee = employeeService.getEmployeeById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No se encontró al empleado con ID: " + id));
 
-        // Actualizamos los datos del empleado existente con la información de la
-        // petición
+        Employee existingEmployee = employeeService.getEmployeeById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontro el empleado con ID: " + id));
+
         existingEmployee.setFirstName(employeeDetails.getFirstName());
         existingEmployee.setLastName(employeeDetails.getLastName());
         existingEmployee.setCorreo(employeeDetails.getCorreo());
         existingEmployee.setDepartament(employeeDetails.getDepartament());
         existingEmployee.setOcupacion(employeeDetails.getOcupacion());
 
-        Employee updatedEmployee = employeeService.saveEmployee(existingEmployee);
-        return ResponseEntity.ok(updatedEmployee);
+
+        Employee updateEmployee = employeeService.saveEmployee(existingEmployee);
+        return ResponseEntity.ok(updateEmployee);
+
     }
 
-    // Eliminar un empleado (endpoint DELETE)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-        employeeService.deleteEmployee(id);
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id){
+
+         employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
     }
 
